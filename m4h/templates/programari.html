@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Programări</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="{% static 'js/menu.js' %}" defer></script>
+</head>
+<body>
+    <div class="header">
+        <button class="menu-btn" onclick="toggleSidebar()">&#9776;</button>
+        <p>{{ nume }} {{ prenume }}</p>
+        <a href="{% url 'logout' %}" class="btn_logout">Deconectare</a>
+    </div>
+    <div class="container">
+        <div class="sidebar" id="sidebar">
+            <h2 class="sidebar-title">HealthPortal</h2>
+            <ul class="sidebar-menu">
+                <li><a href="{% url 'index' %}">Home</a></li>
+                <li><a href="{% url 'profil' %}">Profil</a></li>
+                <li><a href="{% url 'chat' %}">Chat</a></li>
+                <li><a href="{% url 'view_medical_results' %}">Rezultate Medicale</a></li>
+                {% if user.is_authenticated and user.profile.role == 'pacient' %}
+                <li><a href="{% url 'view_personal_history' %}">Istoric Medical</a></li>
+                {% endif %}
+                {% if user.is_authenticated and user.profile.role == 'doctor' %}
+                <li><a href="{% url 'view_patient_history' %}">Istoric Medical Pacienti</a></li>
+                {% endif %}
+                <li><a href="{% url 'prescriptii' %}">Prescriptii</a></li>
+                <li><a href="{% url 'manage_appointments' %}">Programari</a></li>
+                {% if user.is_authenticated and user.profile.role == 'doctor' %}
+                    <li><a href="{% url 'view_patients' %}">Pacienți</a></li>
+                {% endif %}
+            </ul>
+        </div>
+        <div class="main-content">
+            <h1>Programări</h1>
+            <form class="appointment-form" action="{% url 'manage_appointments' %}" method="POST">
+                <label for="id">Selectează Pacient:</label>
+                <select name="id" id="id">
+                    {% for patient in patients %}
+                        <option value="{{ patient.id }}">{{ patient.nume }} {{ patient.prenume }}</option>
+                    {% endfor %}
+                </select>
+                <label for="appointment_date">Data Programării:</label>
+                <input type="datetime-local" name="appointment_date" id="appointment_date" required>
+                <button type="submit">Programează</button>
+            </form>
+            <div class="appointment-list">
+                <h2>Programări Existente</h2>
+                {% for appointment in appointments %}
+                    <div class="appointment-item">
+                        <p>{{ appointment.nume }} {{ appointment.prenume }} - {{ appointment.appointment_date }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>

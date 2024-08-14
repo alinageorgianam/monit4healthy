@@ -1,0 +1,129 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #e3dac9;
+    color: #ffffff; /* Text color modified to dark grey */
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    display: flex;
+    flex: 1;
+    width: 100%;
+}
+
+.sidebar {
+    width: 250px;
+    background-color: #004225;
+    padding: 20px;
+    box-sizing: border-box;
+    height: 100%;
+    position: fixed;
+    top: 50px; /* Height of the header */
+    left: 0;
+    bottom: 0;
+    transition: transform 0.3s ease;
+    transform: translateX(-100%);
+}
+
+.sidebar-title {
+    color: #FFFFFF;
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.sidebar-menu {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar-menu li {
+    margin: 15px 0;
+}
+
+.sidebar-menu li a {
+    color: #FFFFFF;
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+.main-content {
+    flex: 1;
+    padding: 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center align the content */
+    justify-content: flex-start; /* Adjust as needed */
+    margin-left: 270px; /* Width of the sidebar */
+    margin-top: 70px; /* Height of the header */
+}
+
+.header {
+    background-color: #004225;
+    width: 100%;
+    height: 50px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0 20px;
+    z-index: 10;
+}
+
+.header p {
+    margin-right: 20px;
+    font-size: 18px;
+}
+
+.header a {
+    background-color: #1e1e1e;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 2%;
+    margin-left: 2%;
+    text-decoration: none;
+}
+
+.header a:hover {
+    background-color: #444;
+}
+
+.table-container {
+    width: 100%;
+    max-width: 1000px; /* Adjust the max-width as needed */
+    background-color: #006a4e;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    margin-top: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table th, table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+table th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #93c2a7;
+    color: white;
+}

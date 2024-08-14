@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Profil</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="{% static 'js/menu.js' %}" defer></script>
+    <style>
+        .profile-info, .cnp-info {
+    margin-left: 270px; /* Asigură-te că această valoare corespunde cu lățimea sidebar-ului */
+    padding: 20px;
+    color: white;
+    background-color: #006a4e;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+h1 {
+    margin-left: 270px;
+    padding-top: 20px;
+}
+.profile-info h2, .cnp-info h2 {
+    margin-top: 0;
+}
+
+.profile-info p, .cnp-info p {
+    margin: 10px 0;
+}
+    </style>
+</head>
+<body>
+    <div class="header">
+        <button class="menu-btn" onclick="toggleSidebar()">&#9776;</button>
+        <p>{{ nume }} {{ prenume }}</p>
+        <a href="{% url 'logout' %}" class="btn_logout">Deconectare</a>
+    </div>
+    <div class="container">
+        <div class="sidebar" id="sidebar">
+            <h2 class="sidebar-title">HealthPortal</h2>
+            <ul class="sidebar-menu">
+                <li><a href="{% url 'index' %}">Home</a></li>
+                <li><a href="{% url 'profil' %}">Profil</a></li>
+                <li><a href="{% url 'chat' %}">Chat</a></li>
+                <li><a href="{% url 'view_medical_results' %}">Rezultate Medicale</a></li>
+                {% if user.is_authenticated and user.profile.role == 'pacient' %}
+                <li><a href="{% url 'view_personal_history' %}">Istoric Medical</a></li>
+                {% endif %}
+                {% if user.is_authenticated and user.profile.role == 'doctor' %}
+                <li><a href="{% url 'view_patient_history' %}">Istoric Medical Pacienti</a></li>
+                {% endif %}
+                <li><a href="{% url 'prescriptii' %}">Prescriptii</a></li>
+                <li><a href="{% url 'manage_appointments' %}">Programari</a></li>
+                {% if user.is_authenticated and user.profile.role == 'doctor' %}
+                    <li><a href="{% url 'view_patients' %}">Pacienți</a></li>
+                {% endif %}
+            </ul>
+        </div>
+        <h1>Profil</h1>
+        <div class="profile-info">
+            <p><strong>Nume:</strong> {{ account.nume }}</p>
+            <p><strong>Prenume:</strong> {{ account.prenume }}</p>
+            <p><strong>Varsta:</strong> {{ account.varsta }}</p>
+            <p><strong>Adresa:</strong> {{ account.adresa }}</p>
+            <p><strong>Telefon:</strong> {{ account.telefon }}</p>
+            <p><strong>CNP:</strong> {{ account.cnp }}</p>
+        </div>
+        <div class="cnp-info">
+            <h2>Informații CNP</h2>
+            <p><strong>Sex:</strong> {{ cnp_info.sex }}</p>
+            <p><strong>Data nașterii:</strong> {{ cnp_info.zi_nastere }}/{{ cnp_info.luna_nastere }}/{{ cnp_info.an_nastere }}</p>
+            <p><strong>Județ:</strong> {{ cnp_info.judet }}</p>
+            <p><strong>Număr Unic:</strong> {{ cnp_info.nr_unic }}</p>
+            <p><strong>Cifră Control:</strong> {{ cnp_info.cifra_control }}</p>
+        </div>
+    </div>
+</body>
+</html>

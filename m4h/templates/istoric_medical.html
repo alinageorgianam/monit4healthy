@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Istoric Medical</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="{% static 'js/menu.js' %}" defer></script>
+    <script src="{% static 'js/medical_history.js' %}" defer></script>
+</head>
+<body>
+    <div class="header">
+        <button class="menu-btn" onclick="toggleSidebar()">&#9776;</button>
+        {% if user.is_authenticated and user.profile.role == 'pacient' %}
+        <p>Pacient {{ user.profile.nume }} {{ user.profile.prenume }}</p>
+        {% elif user.is_authenticated and user.profile.role == 'doctor' %}
+        <p>Dr. {{ user.profile.nume }} {{ user.profile.prenume }}</p>
+        {% endif %}
+        <a href="{% url 'logout' %}" class="btn_logout">Deconectare</a>
+    </div>
+    <div class="container">
+        <div class="sidebar" id="sidebar">
+            <h2 class="sidebar-title">HealthPortal</h2>
+            <ul class="sidebar-menu">
+                <li><a href="{% url 'index' %}">Home</a></li>
+                <li><a href="{% url 'profil' %}">Profil</a></li>
+                <li><a href="{% url 'chat' %}">Chat</a></li>
+                <li><a href="{% url 'view_medical_results' %}">Rezultate Medicale</a></li>
+                {% if user.is_authenticated and user.profile.role == 'pacient' %}
+                <li><a href="{% url 'view_personal_history' %}">Istoric Medical</a></li>
+                {% endif %}
+                {% if user.is_authenticated and user.profile.role == 'doctor' %}
+                <li><a href="{% url 'view_patient_history' %}">Istoric Medical Pacienti</a></li>
+                {% endif %}
+                <li><a href="{% url 'prescriptii' %}">Prescriptii</a></li>
+                <li><a href="{% url 'manage_appointments' %}">Programari</a></li>
+                {% if user.is_authenticated and user.profile.role == 'doctor' %}
+                    <li><a href="{% url 'view_patients' %}">Pacienți</a></li>
+                {% endif %}
+            </ul>
+        </div>
+        <div class="main-content">
+            <h1>Istoric Medical</h1>
+            <form action="{% url 'upload_image_patient' %}" method="post" enctype="multipart/form-data">
+                <label for="image">Selectează imagine:</label>
+                <input type="file" name="image" id="image" accept="image/*" required>
+                <label for="image_type">Tip imagine:</label>
+                <select name="image_type" id="image_type" required>
+                    <option value="RMN">RMN</option>
+                    <option value="CT">CT</option>
+                    <option value="Radiografie">Radiografie</option>
+                </select>
+                <button type="submit">Încarcă</button>
+            </form>
+            <div class="image-gallery">
+                {% for image in images %}
+                <div class="image-item">
+                    <img src="data:image/jpeg;base64,{{ image.image_data }}" alt="Medical Image" 
+                    class="clickable-image" data-image-src="data:image/jpeg;base64,{{ image.image_data }}">
+                    <p>Data: {{ image.upload_date }}</p>
+                    <p>Tip: {{ image.image_type }}</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div id="imageModal" class="modal">
+        <span class="close" onclick="closeImageModal()">&times;</span>
+        <img class="modal-content" id="modalImage">
+    </div>
+</body>
+</html>

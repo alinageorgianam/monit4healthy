@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Rezultate Medicale</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="{% static 'js/menu.js' %}" defer></script>
+    <script src="{% static 'js/medical_results.js' %}" defer></script>
+    <style>
+        .table-container {
+    width: 100%;
+    max-width: 1000px; /* Adjust the max-width as needed */
+    background-color: #006a4e;
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    margin-top: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table th, table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+table th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #93c2a7;
+    color: white;
+}
+
+    </style>
+</head>
+<body>
+    <div class="header">
+        <button class="menu-btn" onclick="toggleSidebar()">&#9776;</button>
+        <p>{{ nume }} {{ prenume }}</p>
+        <a href="{% url 'logout' %}" class="btn_logout">Deconectare</a>
+    </div>
+    <div class="container">
+        <div class="sidebar" id="sidebar">
+            <h2 class="sidebar-title">HealthPortal</h2>
+            <ul class="sidebar-menu">
+                <li><a href="{% url 'index' %}">Home</a></li>
+                <li><a href="{% url 'profil' %}">Profil</a></li>
+                <li><a href="{% url 'chat' %}">Chat</a></li>
+                <li><a href="{% url 'view_medical_results' %}">Rezultate Medicale</a></li>
+                {% if user.is_authenticated and user.profile.role == 'pacient' %}
+                <li><a href="{% url 'view_personal_history' %}">Istoric Medical</a></li>
+                {% endif %}
+                {% if user.is_authenticated and user.profile.role == 'doctor' %}
+                <li><a href="{% url 'view_patient_history' %}">Istoric Medical Pacienti</a></li>
+                {% endif %}
+                <li><a href="{% url 'prescriptii' %}">Prescriptii</a></li>
+                <li><a href="{% url 'manage_appointments' %}">Programari</a></li>
+                {% if user.is_authenticated and user.profile.role == 'doctor' %}
+                    <li><a href="{% url 'view_patients' %}">Pacienți</a></li>
+                {% endif %}
+            </ul>
+        </div>
+        <div class="main-content">
+            <select id="patient-select" onchange="fetchPatientData()">
+                <option value="">Selectează un pacient</option>
+                {% for patient in patients %}
+                    <option value="{{ patient.id }}">{{ patient.nume }} {{ patient.prenume }}</option>
+                {% endfor %}
+            </select>
+            <div class="table-container">
+            <h2>Rezultate Medicale</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nume</th>
+                        <th>Prenume</th>
+                        <th>Data</th>
+                        <th>Uric Acid Level</th>
+                        <th>Absorbance</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for result in results %}
+                    <tr>
+                        <td>{{ result.nume }}</td>
+                        <td>{{ result.prenume }}</td>
+                        <td>{{ result.timestamp }}</td>
+                        <td>{{ result.uric_acid_level }}</td>
+                        <td>{{ result.absorbance }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

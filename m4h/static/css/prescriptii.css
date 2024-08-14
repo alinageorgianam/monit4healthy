@@ -1,0 +1,155 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #e3dac9;
+    color: #ffffff;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; /* Added to avoid scroll */
+}
+
+.container {
+    display: flex;
+    flex: 1;
+    width: 100%;
+}
+
+.sidebar {
+    width: 250px;
+    background-color: #004225;
+    padding: 20px;
+    box-sizing: border-box;
+    height: 100%;
+    position: fixed;
+    top: 50px; /* Height of the header */
+    left: 0;
+    bottom: 0;
+    transition: transform 0.3s ease;
+    transform: translateX(-100%);
+}
+
+.sidebar-title {
+    color: #FFFFFF;
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.sidebar-menu {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar-menu li {
+    margin: 15px 0;
+}
+
+.sidebar-menu li a {
+    color: #FFFFFF;
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+.main-content {
+    flex: 1;
+    padding: 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center align the form */
+    justify-content: center; /* Changed from flex-start to center */
+    margin-left: 270px; /* Width of the sidebar */
+    margin-top: 70px; /* Height of the header */
+    height: calc(100vh - 70px); /* Adjust height */
+}
+
+.header {
+    background-color: #004225;
+    width: 100%;
+    height: 50px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0 20px;
+    z-index: 10;
+}
+
+.header p {
+    margin-right: 20px;
+    font-size: 18px;
+}
+
+.form-container {
+    width: 100%;
+    max-width: 500px; /* Adjusted from 600px to 500px */
+    background-color: #006a4e;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.form-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.input-group {
+    margin-bottom: 15px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.input-group input, .input-group select {
+    width: 100%;
+    padding: 8px; /* Adjusted from 10px to 8px */
+    border-radius: 5px;
+    border: none;
+    background-color: #e3dac9;
+    color: white;
+}
+
+.medications {
+    margin-top: 20px;
+}
+
+.medications h3 {
+    margin-bottom: 10px;
+}
+
+.btn {
+    padding: 10px 20px;
+    background-color: #e3dac9;
+    color: #3b3b3b;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+}
+
+.btn:hover {
+    background-color: #555;
+}
+
+.btn_logout {
+    background-color: #1e1e1e;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 2%;
+    margin-left: 2%;
+}
+
+.btn_logout:hover {
+    background-color: #444;
+}

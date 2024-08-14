@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Autentificare</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="form-container">
+            <div class="header">
+                <a href="{% url 'login' %}" class="switch-btn active">Login</a>
+                <a href="{% url 'register' %}" class="switch-btn">Register</a>
+            </div>
+            <form action="{% url 'login' %}" method="post">
+                {% csrf_token %}
+                <div class="msg">{{ form.non_field_errors }}</div>
+                <div class="textbox">
+                    {{ form.as_p.label_tag }} {{ form.as_p }}
+                </div>
+                <input type="submit" class="btn" value="Autentificare">
+            </form>
+            <p class="bottom">Nu ai un cont? <a class="bottom" href="{% url 'register' %}">Inregistreaza-te aici!</a></p>
+        </div>
+    </div>
+</body>
+</html>

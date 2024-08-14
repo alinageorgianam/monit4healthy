@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="form-container">
+            <form id="registerForm" method="post" action="{% url 'register' %}">
+                {% csrf_token %}
+                {{ form.as_p }}  <!-- Renderizează automat câmpurile din formular -->
+                <label for="role">Rol:</label>
+                <select id="role" name="role" class="textbox" required>
+                    <option value="pacient">Pacient</option>
+                    <option value="doctor">Doctor</option>
+                </select>
+                <input type="submit" class="btn" value="Register">
+            </form>
+            <p class="bottom">Ai deja un cont? <a class="bottom" href="{% url 'login' %}">Autentifică-te aici!</a></p>
+        </div>
+    </div>
+</body>
+</html>
