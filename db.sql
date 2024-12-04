@@ -42,7 +42,7 @@ CREATE TABLE `auth_group_permissions` (
   `id` bigint NOT NULL,
   `group_id` int NOT NULL,
   `permission_id` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET= utf8mb3;
 
 -- --------------------------------------------------------
 
@@ -451,11 +451,56 @@ CREATE TABLE `m4h_profile` (
   `telefon` varchar(15) DEFAULT NULL,
   `nume` varchar(100) NOT NULL,
   `prenume` varchar(100) NOT NULL,
-  `role` varchar(10) NOT NULL,
+  `role` enum('doctor','pacient') NOT NULL,
   `email` varchar(254) NOT NULL,
   `id_doctor_id` bigint DEFAULT NULL,
   `last_active` datetime(6) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
+CREATE TABLE `doctor_profiles` (
+  `id` bigint NOT NULL,
+  `user_id` int NOT NULL,
+  `adresa` varchar(255) DEFAULT NULL,
+  `cnp` varchar(13) NOT NULL,
+  `varsta` int DEFAULT NULL,
+  `telefon` varchar(15) DEFAULT NULL,
+  `nume` varchar(100) NOT NULL,
+  `prenume` varchar(100) NOT NULL,
+  `cod_parafa` varchar(6) NOT NULL,
+  `email` varchar(254) NOT NULL,
+  `last_active` datetime(6) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
+CREATE TABLE `pacient_profiles` (
+  `id` bigint NOT NULL,
+  `user_id` int NOT NULL,
+  `adresa` varchar(255) DEFAULT NULL,
+  `cnp` varchar(13) NOT NULL,
+  `varsta` int DEFAULT NULL,
+  `telefon` varchar(15) DEFAULT NULL,
+  `nume` varchar(100) NOT NULL,
+  `prenume` varchar(100) NOT NULL,
+  `email` varchar(254) NOT NULL,
+  `id_doctor_id` bigint DEFAULT NULL,
+  `last_active` datetime(6) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
+ALTER TABLE `doctor_profiles`
+    ADD PRIMARY KEY (`id`),
+    ADD UNIQUE KEY `user_id` (`user_id`),
+    ADD UNIQUE KEY `cnp` (`cnp`),
+    ADD UNIQUE KEY `email` (`email`),
+    ADD UNIQUE KEY `cod_parafa` (`cod_parafa`),
+    ADD FOREIGN KEY (`user_id`) REFERENCES `m4h_profile` (`user_id`);
+
+ALTER TABLE `pacient_profiles`
+    ADD PRIMARY KEY (`id`),
+    ADD UNIQUE KEY `user_id` (`user_id`),
+    ADD UNIQUE KEY `cnp` (`cnp`),
+    ADD UNIQUE KEY `email` (`email`),
+    ADD FOREIGN KEY (`user_id`) REFERENCES `m4h_profile` (`user_id`),
+    ADD FOREIGN KEY (`id_doctor_id`) REFERENCES `doctor_profiles` (`id`);
+
 
 --
 -- Dumping data for table `m4h_profile`

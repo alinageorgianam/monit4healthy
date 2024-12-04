@@ -1,0 +1,38 @@
+{% extends 'PrimaryTemplate/base.html' %}
+{% block title %}Programări{% endblock %}
+
+{% block content %}
+<div class="appointment-main-content">
+    <h1>Programări</h1>
+    
+    <!-- Formularul pentru crearea unei noi programări -->
+    <form class="appointment-form" action="{% url 'manage_appointments' %}" method="POST">
+        {% csrf_token %}
+        <label for="id">Selectează Pacient:</label>
+        <select name="id" id="id" required>
+            {% for patient in patients %}
+                <option value="{{ patient.id }}">{{ patient.nume }} {{ patient.prenume }}</option>
+            {% endfor %}
+        </select>
+        
+        <label for="appointment_date">Data Programării:</label>
+        <input type="datetime-local" name="appointment_date" id="appointment_date" required>
+        
+        <button type="submit">Programează</button>
+    </form>
+    
+    <!-- Lista de programări existente -->
+    <div class="appointment-list">
+        <h2>Programări Existente</h2>
+        {% if appointments %}
+            {% for appointment in appointments %}
+                <div class="appointment-item">
+                    <p>{{ appointment.patient.nume }} {{ appointment.patient.prenume }} - {{ appointment.appointment_date|date:"d/m/Y H:i" }}</p>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>Nu există programări disponibile.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

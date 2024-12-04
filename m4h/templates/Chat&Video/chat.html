@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chat</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'CSS/PrimaryTemplate/base.css' %}">
+    <script src="{% static 'JavaScripts/MainTemplate/lista_pacienti.js' %}" defer></script>
+    <script src="{% static 'JavaScripts/Chat&Video/chat.js' %}" defer></script>
+</head>
+<body>
+    <div class="header">
+        <button class="menu-btn" onclick="toggleSidebar()">&#9776;</button>
+        <p>{{ nume }} {{ prenume }}</p>
+        <a href="{% url 'logout' %}" class="btn_logout">Deconectare</a>
+    </div>
+    <div class="container">
+        <div class="sidebar" id="sidebar">
+            <h2 class="sidebar-title">HealthPortal</h2>
+            <ul class="sidebar-menu">
+                <li><a href="{% url 'index' %}">Home</a></li>
+                <li><a href="{% url 'profil' %}">Profil</a></li>
+                <li><a href="{% url 'chat' %}">Chat</a></li>
+                <li><a href="{% url 'view_medical_results' %}">Rezultate Medicale</a></li>
+                {% if user.is_authenticated and user.profile.role == 'pacient' %}
+                <li><a href="{% url 'view_personal_history' %}">Istoric Medical</a></li>
+                {% endif %}
+                {% if user.is_authenticated and user.profile.role == 'doctor' %}
+                <li><a href="{% url 'view_patient_history' %}">Istoric Medical Pacienti</a></li>
+                {% endif %}
+                <li><a href="{% url 'prescriptii' %}">Prescriptii</a></li>
+                <li><a href="{% url 'manage_appointments' %}">Programari</a></li>
+                {% if user.is_authenticated and user.profile.role == 'doctor' %}
+                    <li><a href="{% url 'view_patients' %}">Pacienți</a></li>
+                {% endif %}
+            </ul>
+        </div>
+        <div class="main-content">
+            <h1>Chat</h1>
+            <div class="user-list">
+                <h2>Utilizatori</h2>
+                {% for user in users %}
+                <div class="user-item">
+                <span>{{ user.nume }} {{ user.prenume }}</span>
+                    <button class="chat-button" data-user-id="{{ user.id }}" data-user-name="{{ user.nume }} {{ user.prenume }}">Chat</button>
+                    <button class="video-call-button" data-user-id="{{ user.id }}" data-user-name="{{ user.nume }} {{ user.prenume }}">Video Call</button>
+                </div>
+                {% endfor %}
+            </div>
+            <div id="chat-container" style="display: none;" class="chat-container">
+                <div class="chat-header">
+                    <span id="chat-header"></span>
+                    <button id="close-chat">Close</button>
+                </div>
+                <div id="chat-messages" class="chat-messages"></div>
+                <form id="chat-form">
+                    <label for="message-input"></label><label for="message-input"></label><input type="text" id="message-input" placeholder="Scrie un mesaj...">
+                    <button type="submit">Trimite</button>
+                </form>
+            </div>
+            <div id="video-container" style="display: none;" class="video-container">
+                <div class="video-header">
+                    <span>Video Call</span>
+                    <button id="close-video">End Call</button>
+                </div>
+                <video id="local-video" autoplay muted class="video-element"></video>
+                <video id="remote-video" autoplay class="video-element"></video>
+            </div>
+            <input type="hidden" id="current-user-id" value="">
+        </div>
+    </div>
+</body>
+</html>

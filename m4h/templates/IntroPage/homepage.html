@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Intro Page</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'CSS/PrimaryTemplate/base.css' %}">
+    <link rel="stylesheet" href="{% static 'CSS/IntroPage/intro.css' %}">
+</head>
+<body>
+    <!-- Header principal -->
+    <header class="main-header">
+        <div class="header-center">
+            <img src="{% static 'Images&Logo/logo_v2.svg' %}" alt="Monit4Healthy Logo" class="header-logo">
+        </div>
+        <div class="header-right">
+            <a href="{% url 'login' %}" class="header-btn">Autentificare</a>
+            <a href="{% url 'register' %}" class="header-btn">Înregistrare</a>
+        </div>
+    </header>
+
+    <!-- Header secundar -->
+    <div class="secondary-header">
+        <button class="support-btn">Suport Informativ</button>
+        <button class="option-btn">Buton 1</button>
+        <button class="option-btn">Buton 2</button>
+    </div>
+
+    <!-- Slideshow -->
+    <div class="slideshow-container">
+        <div class="slideshow">
+            <div class="slide fade">
+                <img src="{% static 'Images/slide1.jpg' %}" alt="Slide 1">
+                <div class="text">Blackbox Medical este un dispozitiv inovator de monitorizare la distanță, proiectat să ofere evaluări detaliate ale funcțiilor vitale și ale indicatorilor de sănătate ai pacientului. Conceput pentru utilizare atât în mediul clinic, cât și în afara acestuia, acest sistem avansat permite monitorizarea continuă și non-invazivă a unor parametri esențiali precum activitatea cardiacă, saturația de oxigen, nivelul de CO₂ și alcoolemia din aerul expirat, precum și temperatura corporală. Aceste funcționalități contribuie la o abordare integrată în diagnosticare și la îmbunătățirea calității îngrijirii medicale.</div>
+            </div>
+            <div class="slide fade">
+                <img src="{% static 'Images&Logo/Blackbox_ACU_v1.jpeg' %}" alt="Slide 2" class="slide-image">
+                <div class="text">Blackbox ACU este un dispozitiv portabil de monitorizare la domiciliu, conceput special pentru pacienții care necesită măsurători frecvente ale nivelului de acid uric din urină. Folosind tehnologia de spectrofotometrie, acest dispozitiv permite evaluarea rapidă și precisă a nivelului de acid uric fără ca pacientul să fie nevoit să se deplaseze la un laborator clinic. Astfel, Blackbox ACU revoluționează managementul bolilor legate de acidul uric, cum ar fi guta, nefropatia urică sau alte afecțiuni metabolice.</div>
+            </div>
+            <div class="slide fade">
+                <img src="{% static 'Images/slide3.jpg' %}" alt="Slide 3">
+                <div class="text">Monit4Healthy este o aplicație web inovatoare concepută pentru a conecta pacienții și medicii într-un mod eficient, oferind o platformă centralizată pentru monitorizarea continuă a stării de sănătate a pacienților și examinarea rezultatelor medicale colectate de dispozitive avansate precum Blackbox Medical, Blackbox ACU, Blackbox EMG și GaitBand. Aplicația oferă o interfață intuitivă și funcționalități dedicate atât pentru pacienți, cât și pentru medici, facilitând comunicarea, partajarea datelor și intervențiile rapide.</div>
+            </div>
+            <!-- Mai multe slide-uri, dacă este necesar -->
+        </div>
+        <!-- Indicatori pentru slide-uri -->
+        <div class="dots">
+            <span class="dot" onclick="currentSlide(1)"></span>
+            <span class="dot" onclick="currentSlide(2)"></span>
+            <span class="dot" onclick="currentSlide(3)"></span>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <p>© 2024 Institutul Național de Cercetare-Dezvoltare în Informatică - ICI București</p>
+        <a href="https://ici.ro">Vizitează ici.ro pentru mai multe informații!</a>
+    </footer>
+
+    <script src="{% static 'JavaScripts/IntroPage/intro.js' %}"></script>
+</body>
+</html>

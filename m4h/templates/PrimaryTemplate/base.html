@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Monit4Healthy</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'CSS/PrimaryTemplate/base.css' %}">
+    <link rel="stylesheet" href="{% static 'CSS/Profile/profile.css' %}">
+    <link rel="stylesheet" href="{% static 'CSS/Appointments/programari.css' %}">
+    <link rel="stylesheet" href="{% static 'CSS/MainTemplate/main.css' %}">
+    <link rel="stylesheet" href="{% static 'CSS/MedicalHistory/imp.css' %}">
+    <link rel="stylesheet" href="{% static 'CSS/prescriptii.css' %}">
+    <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.css' rel='stylesheet' />
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.js'></script>
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/locales-all.min.js'></script>
+    <script src="{% static 'JavaScripts/MainTemplate/calendar.js' %}" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="{% static 'JavaScripts/PrimaryTemplate/dropdown.js' %}" defer></script>
+    <script src="{% static 'JavaScripts/Equipments&Systems/Charts.js' %}" defer></script>
+    <script src="{% static 'JavaScripts/MainTemplate/lista_pacienti.js' %}" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.0/socket.io.min.js"></script>
+    <script src="{% static 'JavaScripts/MedicalHistory/medical_history_doctor.js' %}" defer></script>
+    
+</head>
+<body>
+    <div class="main-container">
+        <!-- Header principal -->
+        <header class="main-header">
+            <div class="header-left">
+                <a href="{% url 'main' %}" class="home-btn">&#127968; Acasa</a>
+            </div>
+            <div class="header-center">
+                <img src="{% static 'Images&Logo/logo_v2.svg' %}" alt="Monit4Healthy Logo" class="header-logo">
+            </div>
+            <div class="header-right">
+                <div class="user-profile" onclick="toggleDropdown()">
+                    <div class="profile-icon">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                    {% if user.is_authenticated and user.profile.role == 'pacient' %}
+                        <p>Pacient {{ user.profile.nume }} {{ user.profile.prenume }}</p>
+                    {% elif user.is_authenticated and user.profile.role == 'doctor' %}
+                        <p>Dr. {{ user.profile.nume }} {{ user.profile.prenume }}</p>
+                    {% endif %}
+                </div>
+                <div id="dropdown-menu" class="dropdown-menu">
+                    <a>Setări</a>
+                    <a href="{% url 'profil' %}">Profil</a>
+                    <a href="#" onclick="document.getElementById('logout-form').submit(); return false;">Deconectare</a>
+                    <form id="logout-form" action="{% url 'logout' %}" method="POST" style="display: none;">
+                        {% csrf_token %}
+                    </form>
+                </div>
+            </div>
+        </header>
+
+        <!-- Meniul secundar -->
+        <div class="secondary-header">
+            <nav class="nav-menu">
+                <ul>
+                    <li><a href="{% url 'view_medical_results' %}">Rezultate Medicale</a></li>
+                    {% if user.is_authenticated and user.profile.role == 'pacient' %}
+                        <li><a href="{% url 'view_personal_history' %}">Istoric Medical</a></li>
+                    {% endif %}
+                    {% if user.is_authenticated and user.profile.role == 'doctor' %}
+                        <li><a href="{% url 'view_patient_history' %}">Istoric Medical Pacienti</a></li>
+                    {% endif %}
+                    <li><a href="{% url 'prescriptii' %}">Prescriptii</a></li>
+                    <li><a href="{% url 'manage_appointments' %}">Programari</a></li>
+                    {% if user.is_authenticated and user.profile.role == 'doctor' %}
+                        <li><a href="{% url 'view_patients' %}">Pacienți</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+
+        <!-- Conținutul principal -->
+        <main class="main-content">
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <p>© 2024 Institutul Național de Cercetare-Dezvoltare în Informatică - ICI București</p>
+        <a href="https://ici.ro">Vizitează ici.ro pentru mai multe informații!</a>
+    </footer>
+</body>
+</html>

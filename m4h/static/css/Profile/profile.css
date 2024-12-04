@@ -1,0 +1,82 @@
+/* Stiluri generale pentru pagina de profil */
+.profile-page {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    color: #333;
+}
+h1 {
+    font-size: 2em;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Stil pentru secțiunea de antet a profilului */
+.profile-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.profile-avatar img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-right: 20px;
+}
+
+.profile-details h2 {
+    font-size: 1.8em;
+    color: #333;
+    margin: 0;
+}
+
+.profile-details .user-id {
+    color: #666;
+    font-size: 1em;
+}
+
+/* Stiluri pentru carduri */
+.profile-info-card {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.profile-info-card h3 {
+    font-size: 1.4em;
+    color: #006a4e;
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+}
+
+.account-details p, .personal-details p, .cnp-details p {
+    margin: 10px 0;
+    font-size: 1em;
+    color: #333;
+}
+
+.account-details p strong, .personal-details p strong, .cnp-details p strong {
+    color: #333;
+}
+
+/* Buton de editare */
+.edit-btn {
+    background-color: #e0e0e0;
+    color: #333;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9em;
+    margin-left: 10px;
+}
+
+.edit-btn:hover {
+    background-color: #d0d0d0;
+}

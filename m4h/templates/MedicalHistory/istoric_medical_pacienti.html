@@ -1,0 +1,25 @@
+{% extends 'PrimaryTemplate/base.html' %}
+{% load static %}
+
+{% block title %}Istoric Medical Pacienti{% endblock %}
+
+{% block content %}
+<div class="imp-main-content">
+    <h1>Istoric Medical Pacienti</h1>
+    {% for patient in patients %}
+        <div class="patient-history">
+            <h2>{{ patient.nume }} {{ patient.prenume }}</h2>
+            <div class="section">
+                <h3>Diagnosticuri</h3>
+                <p>{{ patient.diagnostics|default:"Nu există diagnosticuri disponibile." }}</p>
+            </div>
+            <div class="section">
+                <h3>Medicamente</h3>
+                <p>{{ patient.medications|default:"Nu există medicamente disponibile." }}</p>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}
+
+

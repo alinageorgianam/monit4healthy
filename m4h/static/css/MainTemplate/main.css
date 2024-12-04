@@ -1,0 +1,72 @@
+.main-primary-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.main-content-wrapper {
+    display: flex;
+    gap: 20px;
+}
+
+.main-profile-card {
+    width: 300px;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.main-profile-card h2, .main-profile-card h3 {
+    margin-top: 0;
+}
+
+.main-profile-card ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.main-profile-card li {
+    margin-bottom: 10px;
+}
+
+.main-profile-card .btn {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #006a4e;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.main-profile-card .btn:hover {
+    background-color: #004d26;
+}
+
+.main-status {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-left: 10px;
+}
+
+.main-online {
+    background-color: green;
+}
+
+.main-offline {
+    background-color: red;
+}
+
+#calendar {
+    max-width: 700px; /* Ajustează lățimea calendarului */
+    margin: 10px auto 10px 50%; /* Poziționează calendarul mai spre dreapta */
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}

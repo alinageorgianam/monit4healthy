@@ -1,0 +1,47 @@
+{% extends 'PrimaryTemplate/base.html' %}
+{% load static %}
+
+{% block title %}Calendar{% endblock %}
+
+{% block content %}
+    <div id="calendar"></div>
+    
+    {% if user.profile.role == 'doctor' %}
+    <div class="main-content-wrapper">
+        <!-- Box-ul cu Lista Pacienților -->
+        <div class="main-profile-card">
+            <h3>Pacienți Monitorizați</h3>
+            <table id="monitored_patients_table">
+                <thead>
+                    <tr>
+                        <th>Nume</th>
+                        <th>Prenume</th>
+                        <th>Vârstă</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for patient in monitored_patients %}
+                        <tr id="patient_{{ patient.id }}">
+                            <td>{{ patient.nume }}</td>
+                            <td>{{ patient.prenume }}</td>
+                            <td>{{ patient.varsta }}</td>
+                            <td>
+                                {% if patient.is_online %}
+                                    <span class="status online"></span>
+                                {% else %}
+                                    <span class="status offline"></span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="4">Nu există pacienți în monitorizare.</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% endif %}
+{% endblock %}

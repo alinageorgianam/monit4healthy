@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <title>Pacienți</title>
     {% load static %}
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <script src="{% static 'js/menu.js' %}" defer></script>
+    <link rel="stylesheet" href="{% static 'CSS/PrimaryTemplate/base.css' %}">
+    <script src="{% static 'JavaScripts/MainTemplate/lista_pacienti.js' %}" defer></script>
 </head>
 <body>
     <div class="header">
@@ -22,27 +22,6 @@
         
         <a href="#" onclick="document.getElementById('logout-form').submit(); return false;">Deconectare</a>
     </div>
-    <div class="container">
-        <div class="sidebar" id="sidebar">
-            <h2 class="sidebar-title">HealthPortal</h2>
-            <ul class="sidebar-menu">
-                <li><a href="{% url 'index' %}">Home</a></li>
-                <li><a href="{% url 'profil' %}">Profil</a></li>
-                <li><a href="{% url 'chat' %}">Chat</a></li>
-                <li><a href="{% url 'view_medical_results' %}">Rezultate Medicale</a></li>
-                {% if user.is_authenticated and user.profile.role == 'pacient' %}
-                <li><a href="{% url 'view_personal_history' %}">Istoric Medical</a></li>
-                {% endif %}
-                {% if user.is_authenticated and user.profile.role == 'doctor' %}
-                <li><a href="{% url 'view_patient_history' %}">Istoric Medical Pacienti</a></li>
-                {% endif %}
-                <li><a href="{% url 'prescriptii' %}">Prescriptii</a></li>
-                <li><a href="{% url 'manage_appointments' %}">Programari</a></li>
-                {% if user.is_authenticated and user.profile.role == 'doctor' %}
-                    <li><a href="{% url 'view_patients' %}">Pacienți</a></li>
-                {% endif %}
-            </ul>
-        </div>
         <div class="main-content">
             <div class="profile-card">
                 <h2>Lista Pacienților</h2>
@@ -50,7 +29,9 @@
                     <ul>
                         {% for patient in patients %}
                             <li>
-                                <input type="checkbox" name="patients" value="{{ patient.id }}"  {% if patient.id_doctor == doctor_id %} checked{% endif %}>
+                                <label>
+                                    <input type="checkbox" name="patients" value="{{ patient.id }}"  {% if patient.id_doctor == doctor_id %} checked{% endif %}>
+                                </label>
                                 {{ patient.nume }} {{ patient.prenume }} - {{ patient.email }}
                             </li>
                         {% endfor %}
@@ -72,7 +53,6 @@
                 </ul>
             </div>
         </div>
-    </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.0/socket.io.min.js"></script>
     <script>
         const socket = io.connect('http://' + document.domain + ':' + location.port + '/status');

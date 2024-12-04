@@ -1,0 +1,34 @@
+{% extends 'PrimaryTemplate/base.html' %}
+{% block title %}Rezultate Medicale{% endblock %}
+
+{% block content %}
+<h1>Rezultate Medicale</h1>
+
+<!-- Butoane pentru comutare între grafic și tabel -->
+<div class="toggle-buttons">
+    <button onclick="showChart('blackbox')">Grafic Blackbox Medical</button>
+    <button onclick="showTable('blackbox')">Tabel Blackbox Medical</button>
+    <!-- Adaugă butoane similare pentru celelalte categorii -->
+</div>
+
+<!-- Container pentru grafic -->
+<div id="chart-container">
+    <canvas id="chart"></canvas>
+</div>
+
+<!-- Container pentru tabel -->
+<div id="table-container" style="display: none;">
+    <table id="data-table" class="display" style="width:100%">
+        <thead>
+            <tr>
+                <th>Data</th>
+                <th>Valoare</th>
+                <!-- Adaugă coloane în funcție de datele tale -->
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Adaugă datele tabelului -->
+        </tbody>
+    </table>
+</div>
+{% endblock %}

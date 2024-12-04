@@ -4,26 +4,52 @@
     <meta charset="UTF-8">
     <title>Autentificare</title>
     {% load static %}
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+    <link rel="stylesheet" href="{% static 'CSS/PrimaryTemplate/base.css' %}">
+    <link rel="stylesheet" href="{% static 'CSS/registration&authentification/login.css' %}">
 </head>
 <body>
-    <div class="container">
-        <div class="form-container">
-            <div class="header">
-                <a href="{% url 'login' %}" class="switch-btn active">Login</a>
-                <a href="{% url 'register' %}" class="switch-btn">Register</a>
+    <header class="main-header">
+        <div class="header-center">
+            <img src="{% static 'Images&Logo/logo_v2.svg' %}" alt="Monit4Healthy Logo" class="header-logo">
+        </div>
+    </header>
+    
+    <div class="login-page">
+        <!-- Secțiunea informativă în stânga -->
+        <div class="info-section">
+            <h2>Bine ați venit la Monit4Healthy</h2>
+            <p>Informații despre platformă...</p>
+            <img src="{% static 'Images&Logo/info-image.svg' %}" alt="Informative Image" class="info-image">
+            <!-- Poți adăuga mai multe descrieri sau imagini aici -->
+        </div>
+        
+        <!-- Formularul de login în dreapta -->
+        <div class="form-section">
+            <div class="form-container">
+                <form action="{% url 'login' %}" method="post">
+                    {% csrf_token %}
+                    <div class="msg">
+                        {% for error in form.non_field_errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                    <div class="textbox">
+                        <label for="username">Utilizator</label>
+                        {{ form.username }}
+                    </div>
+                    <div class="textbox">
+                        <label for="password">Parola</label>
+                        {{ form.password }}
+                    </div>
+                    <input type="submit" class="btn" value="Autentificare">
+                </form>
+                <p class="bottom">Nu ai un cont? <a href="{% url 'register' %}">Inregistreaza-te aici!</a></p>
             </div>
-            <form action="{% url 'login' %}" method="post">
-                {% csrf_token %}
-                <div class="msg">{{ form.non_field_errors }}</div>
-                <div class="textbox">
-                    {{ form.as_p.label_tag }} {{ form.as_p }}
-                </div>
-                <input type="submit" class="btn" value="Autentificare">
-            </form>
-            <p class="bottom">Nu ai un cont? <a class="bottom" href="{% url 'register' %}">Inregistreaza-te aici!</a></p>
         </div>
     </div>
+    <footer class="main-footer">
+        <p>© 2024 Institutul Național de Cercetare-Dezvoltare în Informatică - ICI București</p>
+        <a href="https://ici.ro">Vizitează ici.ro pentru mai multe informații!</a>
+    </footer>
 </body>
 </html>

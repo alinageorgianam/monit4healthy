@@ -3,22 +3,11 @@
 __pycache__/
 *.pyo
 *.pyd
-*.pyd
 
 # Django specific files
 *.log
 local_settings.py
-db.sqlite3 
-
-# Environment variables
-.env 
-
-# Virtual environment
-venv/
-.envrc
-.env
-.venv/
-env/
+db.sqlite3
 
 # IDE specific files
 .vscode/

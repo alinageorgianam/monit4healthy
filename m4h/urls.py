@@ -1,14 +1,15 @@
-from django.urls import path 
 from django.contrib.auth import views as auth_views
+from django.urls import path
+
 from . import views
-from django.contrib import admin
 
 urlpatterns = [
     #path('admin/', admin.site.urls),
+    path('', views.intro, name='intro'),
     path('register/', views.register, name='register'),
     path('login/', views.login_view, name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
-    path('', views.index, name='index'),  # Aceasta linie redirecționează rădăcina către index
+    path('main/', views.main, name='main'),  # Aceasta linie redirecționează rădăcina către index
     path('profil/', views.profil, name='profil'),
     path('chat/', views.chat, name='chat'),
     path('view_personal_history/', views.view_personal_history, name='view_personal_history'),

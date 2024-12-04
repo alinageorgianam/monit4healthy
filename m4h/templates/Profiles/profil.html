@@ -1,0 +1,74 @@
+{% extends 'PrimaryTemplate/base.html' %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Profilul meu</title>
+</head>
+<body class="profile-page-body">
+{% block content %}
+<div class="profile-page">
+    <h1>Profilul meu</h1>
+
+    <!-- Secțiunea de antet a profilului -->
+    <div class="profile-header info-card">
+        <div class="profile-avatar"></div>
+        <div class="profile-details">
+            <h2>{{ user.profile.nume }} {{ user.profile.prenume }}</h2>
+            <p class="user-id">Cod Unic</p>
+        </div>
+    </div>
+
+    <!-- Secțiunea pentru doctori -->
+    {% if user.profile.role == 'doctor' %}
+    <div class="content">
+        <div id="doctor-info">
+            <p><strong>Cod parafă:</strong> {{ user.profile.cod_parafa }}</p>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Secțiunea de informații de cont -->
+    <div class="profile-info-card">
+        <h3>Date cont</h3>
+        <div class="profile-account-details">
+            <p><strong>Descriere:</strong> Test</p>
+            <p><strong>Număr de telefon:</strong> {{ user.profile.telefon }} <button class="edit-btn">Modifică</button></p>
+            <p><strong>Email:</strong> {{ user.profile.email }} <button class="edit-btn">Modifică</button></p>
+        </div>
+    </div>
+
+    <!-- Secțiunea de informații personale -->
+    <div class="profile-info-card">
+        <h3>Informații personale</h3>
+        <div class="personal-details">
+            <p><strong>Nume:</strong> {{ user.profile.nume }}</p>
+            <p><strong>Prenume:</strong> {{ user.profile.prenume }}</p>
+            <p><strong>Vârstă:</strong> {{ user.profile.cnp_info.varsta }}</p>
+            <p><strong>Adresă:</strong> {{ user.profile.adresa }}</p>
+            <p><strong>Telefon:</strong> {{ user.profile.telefon }}</p>
+            <p><strong>CNP:</strong> {{ user.profile.cnp }}</p>
+        </div>
+    </div>
+
+    <!-- Secțiunea de informații CNP -->
+    <div class="profile-info-card">
+        <h3>Informații CNP</h3>
+        <div class="cnp-details">
+            {% if cnp_info.error %}
+                <p><strong>Error:</strong> {{ user.profile.cnp_info.error }}</p>
+            {% else %}
+                <p><strong>Sex:</strong> {{ user.profile.cnp_info.gender }}</p>
+                <p><strong>Data nașterii:</strong> {{ user.profile.cnp_info.zi_nastere }}</p>
+                <p><strong>Județ:</strong> {{ user.profile.cnp_info.judet }}</p>
+                <p><strong>Număr Unic:</strong> {{ user.profile.cnp_info.nr_unic }}</p>
+                <p><strong>Cifră Control:</strong> {{ user.profile.cnp_info.cifra_control }}</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+</body>
+</html>

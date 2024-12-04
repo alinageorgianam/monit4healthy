@@ -6,4 +6,4 @@ class M4HConfig(AppConfig):
     name = 'm4h'
 
     def ready(self):
-        import m4h.signals  # Importă semnalele
+        pass

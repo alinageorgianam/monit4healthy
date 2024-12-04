@@ -1,114 +1,111 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Formular Prescripție Medicală</title>
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <script src="{% static 'js/menu.js' %}" defer></script>
+{% extends 'PrimaryTemplate/base.html' %}
+{% load static %}
+
+{% block title %}Recomandări Medicale{% endblock %}
+
+{% block content %}
+    <script>
+        function showPatientName() {
+            const patientSelect = document.getElementById('patient');
+            const selectedOption = patientSelect.options[patientSelect.selectedIndex];
+            const patientDetails = document.getElementById('patient-details');
+
+            const nume = selectedOption.getAttribute('data-nume');
+            const prenume = selectedOption.getAttribute('data-prenume');
+            const varsta = selectedOption.getAttribute('data-varsta');
+            const patologie = "Patologie";
+
+            if (selectedOption.value) {
+                document.getElementById('detail-nume').textContent = nume;
+                document.getElementById('detail-prenume').textContent = prenume;
+                document.getElementById('detail-varsta').textContent = varsta;
+                document.getElementById('detail-patologie').textContent = patologie;
+
+                patientDetails.style.display = 'block';
+            } else {
+                patientDetails.style.display = 'none';
+            }
+        }
+    </script>
+
     <style>
-        .form-container {
-    width: 100%;
-    max-width: 500px; /* Adjusted from 600px to 500px */
-    background-color: #006a4e;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-}
-
-.form-container h2 {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.input-group {
-    margin-bottom: 15px;
-}
-
-.input-group label {
-    display: block;
-    margin-bottom: 5px;
-}
-
-.input-group input, .input-group select {
-    width: 100%;
-    padding: 8px; /* Adjusted from 10px to 8px */
-    border-radius: 5px;
-    border: none;
-    background-color: #e3dac9;
-    color: white;
-}
-
-.medications {
-    margin-top: 20px;
-}
-
-.medications h3 {
-    margin-bottom: 10px;
-}
-
-.btn {
-    padding: 10px 20px;
-    background-color: #e3dac9;
-    color: #3b3b3b;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    width: 100%;
-}
-
-.btn:hover {
-    background-color: #555;
-}
-
-.btn_logout {
-    background-color: #1e1e1e;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-right: 2%;
-    margin-left: 2%;
-}
-
-.btn_logout:hover {
-    background-color: #444;
-}
+        #additional_info {
+            width: 100%;
+            height: 150px;
+            font-family: Arial;
+            resize: vertical;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            text-align: left;
+            vertical-align: top;
+            line-height: 1.5;
+            overflow: auto;
+        }
     </style>
-</head>
-<body>
-    <div class="header">
-        <button class="menu-btn" onclick="toggleSidebar()">&#9776;</button>
-        <p>{{ nume }} {{ prenume }}</p>
-        <a href="{% url 'logout' %}" class="btn_logout">Deconectare</a>
-    </div>
-    <div class="container">
-        <div class="sidebar" id="sidebar">
-            <h2 class="sidebar-title">HealthPortal</h2>
-            <ul class="sidebar-menu">
-                <li><a href="{% url 'index' %}">Home</a></li>
-                <li><a href="{% url 'profil' %}">Profil</a></li>
-                <li><a href="{% url 'chat' %}">Chat</a></li>
-                <li><a href="{% url 'view_medical_results' %}">Rezultate Medicale</a></li>
-                {% if user.is_authenticated and user.profile.role == 'pacient' %}
-                <li><a href="{% url 'view_personal_history' %}">Istoric Medical</a></li>
-                {% endif %}
-                {% if user.is_authenticated and user.profile.role == 'doctor' %}
-                <li><a href="{% url 'view_patient_history' %}">Istoric Medical Pacienti</a></li>
-                {% endif %}
-                <li><a href="{% url 'prescriptii' %}">Prescriptii</a></li>
-                <li><a href="{% url 'manage_appointments' %}">Programari</a></li>
-                {% if user.is_authenticated and user.profile.role == 'doctor' %}
-                    <li><a href="{% url 'view_patients' %}">Pacienți</a></li>
-                {% endif %}
-            </ul>
-        </div>
-        <div class="main-content">
-            <div class="form-container">
-                <h2>Prescripție Medicală</h2>
+
+    <div class="p-main-content">
+        {% if user.profile.role == 'doctor' %}
+            <div class="doctor-container">
+                <!-- Form Container -->
+                <div class="p-form-container">
+                    <h2>Adaugă o Recomandare Medicală</h2>
+                    <form method="post" action="{% url 'prescriptii' %}">
+                        {% csrf_token %}
+                        <div class="input-group">
+                            <label for="patient">Selectează Pacient:</label>
+                            <select name="patient" id="patient" required onchange="showPatientName()">
+                                <option value="" disabled selected>Selectează un pacient</option>
+                                {% for patient in patients %}
+                                    <option value="{{ patient.id }}" data-nume="{{ patient.nume }}" data-prenume="{{ patient.prenume }}" data-varsta="{{ patient.varsta }}">
+                                        {{ patient.nume }} {{ patient.prenume }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="additional_info">Recomandare:</label>
+                            <textarea name="additional_info" id="additional_info" placeholder="Completează recomandarea medicală..." required></textarea>
+                        </div>
+
+                        <button type="submit" class="p-btn">Salvează Recomandarea</button>
+                    </form>
+                </div>
+
+                <!-- Patient Details Container (Initially Hidden) -->
+                <div class="p-details-container" id="patient-details" style="display: none;">
+                    <h3>Detalii Pacient</h3>
+                    <p><strong>Nume:</strong> <span id="detail-nume"></span></p>
+                    <p><strong>Prenume:</strong> <span id="detail-prenume"></span></p>
+                    <p><strong>Varsta:</strong> <span id="detail-varsta"></span></p>
+                    <p><strong>Patologie:</strong> <span id="detail-patologie"></span></p>
+                </div>
             </div>
-        </div>
+        {% elif user.profile.role == 'pacient' %}
+            <div class="patient-container center">
+                <div class="recommendations-container">
+                    <h2>Recomandările Mele</h2>
+                    <div class="recommendations-table">
+                        <table>
+                            <thead>
+                            <tr>
+                                <th>Titlul</th>
+                                <th>Data și Ora</th>
+                                <th>Doctor</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td colspan="3">Nu există recomandări disponibile.</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
     </div>
-</body>
-</html>
+{% endblock %}
